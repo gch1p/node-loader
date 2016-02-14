@@ -1,5 +1,5 @@
 {
-	"name": "node-loader",
+	"name": "node2-loader",
 	"version": "0.5.0",
 	"author": "Tobias Koppers @sokra",
 	"description": "node loader module for enhanced-require",
