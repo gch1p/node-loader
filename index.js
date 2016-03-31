@@ -16,3 +16,4 @@ module.exports = function(content) {
     return "try { global.process.dlopen(module, __webpack_public_path__ + " + JSON.stringify(url) + "); } catch(e) { " +
         "throw new Error('Cannot load native module ' + " + JSON.stringify(url) + " + ': ' + e); }";
 }
+module.exports.raw = true;
