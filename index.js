@@ -3,6 +3,9 @@
     Author Tobias Koppers @sokra
     Edited Guilherme Bernal @lbguilherme
 */
+
+var loaderUtils = require("loader-utils");
+
 module.exports = function(content) {
     this.cacheable && this.cacheable();
     if (!this.emitFile) throw new Error("emitFile is required from module system");
