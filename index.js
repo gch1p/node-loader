@@ -22,7 +22,7 @@ module.exports = function(content) {
 
     let modulePath = !query.absolutePath
       ? '__webpack_public_path__+' + JSON.stringify(url)
-      : "require('path').join(__dirname, __webpack_public_path__, "+JSON.stringify(url)+")"
+      : "require('path').join(global.__dirname, __webpack_public_path__, "+JSON.stringify(url)+")"
 
     return "try { global.process.dlopen(module, " + modulePath + "); } catch(e) { " +
       "throw new Error('Cannot load native module ' + " + JSON.stringify(url) + " + ': ' + e); }";
