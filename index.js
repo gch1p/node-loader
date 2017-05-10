@@ -5,20 +5,26 @@
     Edited Evgeny Zinoviev @gch1p
 */
 
-var loaderUtils = require("loader-utils");
+const loaderUtils = require("loader-utils");
 
 module.exports = function(content) {
   this.cacheable && this.cacheable();
   if (!this.emitFile) throw new Error("emitFile is required from module system");
-  var query = loaderUtils.parseQuery(this.query);
-  if (query.emit) {
-    var url = loaderUtils.interpolateName(this, query.name || "[hash].[ext]", {
+
+  let query = loaderUtils.parseQuery(this.query);
+  if (query.emitFile) {
+    let url = loaderUtils.interpolateName(this, query.name || "[hash].[ext]", {
       context: query.context || this.options.context,
       content: content,
       regExp: query.regExp
     });
     this.emitFile(url, content);
-    return "try { global.process.dlopen(module, __webpack_public_path__ + " + JSON.stringify(url) + "); } catch(e) { " +
+
+    let modulePath = !query.absolutePath
+      ? '__webpack_public_path__+' + JSON.stringify(url)
+      : "require('path').join(__webpack_public_path__, "+JSON.stringify(url)+")"
+
+    return "try { global.process.dlopen(module, " + modulePath + "); } catch(e) { " +
       "throw new Error('Cannot load native module ' + " + JSON.stringify(url) + " + ': ' + e); }";
   } else {
     return "try {global.process.dlopen(module, " + JSON.stringify(this.resourcePath) + "); } catch(e) {" +
